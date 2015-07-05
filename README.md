@@ -1,6 +1,7 @@
 ## Installation
 
-    cd Travel Republic
+    git clone git@github.com:achyutjhunjhunwala/travelRepublic.git
+    cd travelRepublic
     npm install
 
 ## Running
