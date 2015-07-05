@@ -1,0 +1,138 @@
+<section class="search-wrapper">
+    <section class="lefthand-filter">
+        <h4 class="filterTitle">Filter By</h4>
+        <div id="accordion-container">
+            <div id="nameFilter">
+                <div class="accordion-header">Name</div>
+                <ul class="ng-scope">
+                    <li ng-repeat="names in uNames" ng-click="sortByHotelName(names)">
+                        <input type="checkbox">
+                        <span class="facet-text" ng-bind="names"></span>
+                    </li>xw
+                </ul>
+            </div>
+            <div id="starsFilter">
+                <div class="accordion-header">Stars</div>
+                <div ng-init="rating = star.rating + 1"></div>
+                <div class="star-rating" star-rating rating-value="rating" data-max="5" on-rating-selected="starRating(rating)"></div>
+            </div>
+            <div id="trpRatingFilter">
+                <div class="accordion-header">Trip Ratings</div>
+                <ul class="ng-scope">
+                    <li ng-click="sortByTripRating(100000)">
+                        <input type="checkbox">
+                        <span class="facet-text ng-binding">100k and above</span>
+                    </li>
+                    <li ng-click="sortByTripRating(200000)">
+                        <input type="checkbox">
+                        <span class="facet-text ng-binding">200k and above</span>
+                    </li>
+                    <li ng-click="sortByTripRating(300000)">
+                        <input type="checkbox">
+                        <span class="facet-text ng-binding">300k and above</span>
+                    </li>
+                    <li ng-click="sortByTripRating(400000)">
+                        <input type="checkbox">
+                        <span class="facet-text ng-binding">400k and above</span>
+                    </li>
+                </ul>
+            </div>
+            <div id="userRatingFilter">
+                <div class="accordion-header">User Ratings</div>
+                <div class="accordion-content">
+                    <div price-slider="" min="0" max="10" minsel="0" maxsel="10" step="0.1" callback="userRatingSelection" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"></div>
+                </div>
+                <div class="price-range">
+                     <span class="min-range">
+                        <input type="text" id="minAmountRange" ng-model="minAmountRange"  value="0" disabled="">
+                    </span>
+                    <span class="max-range">
+                        <input type="text" id="maxAmountRange" ng-model="maxAmountRange" value="10" disabled="">
+                    </span>
+                </div>
+
+            </div>
+            <div id="minCostFilter">
+                <div class="accordion-header">Minimum Cost</div>
+                <div class="accordion-content">
+                    <div price-slider="" min="0" max="1000" minsel="0" maxsel="1000" step="100" callback="priceSelection" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"></div>
+                </div>
+                <div class="price-range">
+                    <span class="min-range">
+                        <input type="text" id="minAmountRange" ng-model="minPriceRange"  value="£0" disabled="">
+                    </span>
+                    <span class="max-range">
+                        <input type="text" id="maxAmountRange" ng-model="maxPriceRange" value="£15" disabled="">
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="searchContentWrap clearfix">
+        <section class="sorts">
+            <h5 class="title">Sort By</h5>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'-Distance')" class="ng-binding">Distance + </a>
+            </div>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'+Distance')" class="ng-binding">Distance -</a>
+            </div>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'-Stars')" class="ng-binding">Stars +</a>
+            </div>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'+Stars')" class="ng-binding">Stars -</a>
+            </div>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'-MinCost')" class="ng-binding">Min Cost +</a>
+            </div>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'+MinCost')" class="ng-binding">Min Cost -</a>
+            </div>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'-TrpRating')" class="ng-binding">TrpRating +</a>
+            </div>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'+TrpRating')" class="ng-binding">TrpRating -</a>
+            </div>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'-UserRating')" class="ng-binding">User Rating +</a>
+            </div>
+            <div class="sort-items">
+                <a href="#" ng-click="sortByClk($event,'+UserRating')" class="ng-binding">User Rating -</a>
+            </div>
+        </section>
+
+        <section class="searchResults" when-scrolled="handleInfiniteScroll()">
+            <ul>
+                <li ng-repeat="data in searchResult">
+                    <div class="hotelinfo">
+                        <div class="hotelImage left">
+                            <img ng-src="data.ImageUrl" err-src="images/hotel.jpg" class="scImage"/>
+                        </div>
+                        <div class="hotelDetail left">
+                            <div class="hotelNameRating">
+                                <h4 class="hotelName" ng-bind="data.Name"></h4>
+                                <div class="hotel-star-rating" star-rating rating-value="data.Stars" data-max="5" on-rating-selected="starRating(rating)"></div>
+                            </div>
+
+                            <div class="hotelLocation">
+                                <span class="type" ng-bind="data.EstablishmentType"></span> in <span class="location" ng-bind="data.Location"></span><br/>
+                                <span>Distance : {{data.Distance | number : 2}} miles</span>
+                            </div>
+                            <div class="customerRating" >Customer Rating {{data.UserRating}}</div>
+                            <div class="distnace"></div>
+                        </div>
+                        <div class="hotelPrice left">
+                            <div class="caption">Rooms from</div>
+                            <div class="price" ng-bind="'£' + data.MinCost"></div>
+                            <div class="selectButton">Select</div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="ajaxLoader" ng-show="loadingData"></div>
+        </section>
+    </section>
+</section>

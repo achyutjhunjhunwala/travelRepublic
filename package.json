@@ -1,0 +1,19 @@
+{
+  "name": "achyut",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AngularJS project modified for Travel Republic.",
+  "repository": "",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.3.1",
+    "http-server": "^0.6.1",
+    "requirejs": "^2.1.15"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install",
+    "start": "http-server -a localhost -p 8000 -c-1 app",
+    "pretest": "npm install"
+  }
+}
